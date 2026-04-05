@@ -1,0 +1,14 @@
+# func.ipc — Define and call a function that squares R0
+# Jump over function definition
+5.0.0.4      # JMP 4        (skip to main at line 4)
+
+# Function at line 2: square R0 (R0 = R0 * R0)
+2.2.0.0      # MUL R0, R0   (line 2)
+7.1.0.0      # RET          (line 3)
+
+# Main starts at line 4
+1.0.0.7      # LOAD R0, 7   (line 4)
+7.0.0.2      # CALL 2       (line 5, call function at line 2)
+6.0.0.0      # PRINTI R0    (line 6)
+6.3.0.0      # PRINTLN      (line 7)
+0.1.0.0      # HALT         (line 8)

@@ -1,0 +1,10 @@
+# Count 1 to 5
+1.0.0.1      # LOAD R0, 1   (counter)
+1.0.1.5      # LOAD R1, 5   (limit)
+6.0.0.0      # PRINTI R0    (line 3, loop start)
+6.3.0.0      # PRINTLN
+4.1.0.1      # EQ R0, R1    (FLAGS = R0 == limit)
+5.1.0.9      # JT 9         (halt if counter reached limit)
+2.5.0.0      # INC R0       (increment counter)
+5.0.0.3      # JMP 3        (loop back)
+0.1.0.0      # HALT
