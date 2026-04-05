@@ -120,8 +120,8 @@ fn parse_token(t: &Token, file: &str) -> Result<Instruction, IpcError> {
             0 => Instruction::Call(t.d),
             1 => Instruction::Ret,
             2 => Instruction::Callr(reg!(t.c)),
-            3 => Instruction::Frame(t.b),
-            4 => Instruction::Unframe(t.b),
+            3 => Instruction::Frame(t.c),
+            4 => Instruction::Unframe(t.c),
             _ => return Err(unknown_opcode(t, file, &raw)),
         },
 
