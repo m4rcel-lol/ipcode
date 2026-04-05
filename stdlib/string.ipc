@@ -1,0 +1,18 @@
+# IPcode Standard Library — String utilities
+#
+# Strings in IPcode are null-terminated sequences of i64 values on the heap.
+# Each element holds one ASCII code; the last element is 0 (null terminator).
+#
+# STRLEN routine (assumes R0 = address of string)
+# Returns length in R1; destroys R2.
+# R15 must be pre-loaded with 0 for the null check.
+1.0.1.0      # LOAD R1, 0   (length counter)
+1.0.2.0      # LOAD R2, 0   (temporary)
+8.2.2.0      # MREAD R2, R0 (read char at R0)
+4.3.2.15     # LT R2, R15   (FLAGS = R2 < 0, false when R2==0 since R15==0)
+4.2.2.15     # NEQ R2, R15  (FLAGS = R2 != 0, true while non-null)
+5.2.0.8      # JF 8         (jump to return if null)
+2.5.1.0      # INC R1       (increment length)
+2.5.0.0      # INC R0       (advance pointer)
+5.0.0.3      # JMP 3        (loop)
+7.1.0.0      # RET

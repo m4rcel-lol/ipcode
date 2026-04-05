@@ -1,0 +1,21 @@
+# IPcode Standard Library — I/O helpers
+#
+# print_int(R0) — print R0 as decimal integer with newline
+# Equivalent to: PRINTI R0 + PRINTLN
+#
+# This file can be assembled as a helper library.
+# The routines below are meant to be jumped/called into.
+
+# PRINT_INT_NL: print R0 as integer, then newline (line 1)
+6.0.0.0      # PRINTI R0
+6.3.0.0      # PRINTLN
+7.1.0.0      # RET
+
+# PRINT_CHAR_NL: print R0 as char, then newline (line 4)
+6.1.0.0      # PRINTC R0
+6.3.0.0      # PRINTLN
+7.1.0.0      # RET
+
+# READ_INT_PROMPT: read integer into R0 from stdin (line 7)
+6.4.0.0      # INPUTI R0
+7.1.0.0      # RET

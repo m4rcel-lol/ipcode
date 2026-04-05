@@ -1,0 +1,16 @@
+[package]
+name = "ipcode"
+version = "0.1.0"
+edition = "2021"
+description = "IPcode — a programming language where every line is a fake IPv4 address"
+license = "MIT"
+
+[[bin]]
+name = "ipc"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+colored = "2.1"
+
+[dev-dependencies]

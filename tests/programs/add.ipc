@@ -1,0 +1,7 @@
+# Add 40 + 2 and print result
+1.0.0.40     # LOAD R0, 40
+1.0.1.2      # LOAD R1, 2
+2.0.0.1      # ADD R0, R1
+6.0.0.0      # PRINTI R0
+6.3.0.0      # PRINTLN
+0.1.0.0      # HALT

@@ -1,0 +1,7 @@
+# Hello World in IPcode
+1.0.0.72     # LOAD R0, 72  (ASCII 'H')
+6.1.0.0      # PRINTC R0
+1.0.0.105    # LOAD R0, 105 (ASCII 'i')
+6.1.0.0      # PRINTC R0
+6.3.0.0      # PRINTLN
+0.1.0.0      # HALT
