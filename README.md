@@ -325,6 +325,14 @@ ipcode run tests/programs/func.ipc
 # Output: 49
 ```
 
+### calculator.ipc — Interactive calculator
+
+Supports `+`, `-`, `*`, `/`, `%` and loops until you enter `q` as operator.
+
+```sh
+ipcode run tests/programs/calculator.ipc
+```
+
 ---
 
 ## VM Specification
