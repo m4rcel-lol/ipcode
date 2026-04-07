@@ -58,7 +58,7 @@ Download the latest release for your platform from the [Releases page](../../rel
 
 - **Debian/Ubuntu** (`.deb`):
   ```sh
-  sudo dpkg -i ./ipcode-*.deb
+  sudo apt install ./ipcode-*.deb
   ```
 - **Fedora/RHEL** (`.rpm`):
   ```sh
