@@ -50,7 +50,7 @@ Lines starting with `#` are comments and are ignored by the interpreter.
 
 ## Installation
 
-### Pre-built binaries
+### Pre-built installers
 
 Download the latest release for your platform from the [Releases page](../../releases).
 
@@ -62,7 +62,7 @@ You need Rust 1.70+ and Cargo:
 git clone https://github.com/m4rcel-lol/ipcode.git
 cd ipcode
 cargo build --release
-# Binary is at target/release/ipc (or ipc.exe on Windows)
+# Binary is at target/release/ipcode (or ipcode.exe on Windows)
 ```
 
 ---
@@ -70,12 +70,12 @@ cargo build --release
 ## Usage
 
 ```
-ipc run <file.ipc>          Execute an IPcode program
-ipc check <file.ipc>        Validate syntax without running
-ipc disasm <file.ipc>       Print human-readable disassembly
-ipc debug <file.ipc>        Step-through debug mode (prints register state)
-ipc version                 Print the IPcode version
-ipc help                    Show usage information
+ipcode run <file.ipc>       Execute an IPcode program
+ipcode check <file.ipc>     Validate syntax without running
+ipcode disasm <file.ipc>    Print human-readable disassembly
+ipcode debug <file.ipc>     Step-through debug mode (prints register state)
+ipcode version              Print the IPcode version
+ipcode help                 Show usage information
 ```
 
 ### Options
@@ -87,9 +87,9 @@ ipc help                    Show usage information
 ### Examples
 
 ```sh
-ipc run tests/programs/hello.ipc
-ipc disasm tests/programs/add.ipc
-ipc debug tests/programs/func.ipc
+ipcode run tests/programs/hello.ipc
+ipcode disasm tests/programs/add.ipc
+ipcode debug tests/programs/func.ipc
 ```
 
 ---
@@ -256,7 +256,7 @@ For 16-bit maximum (0–65535):
 ```
 
 ```sh
-ipc run tests/programs/hello.ipc
+ipcode run tests/programs/hello.ipc
 # Output: Hi
 ```
 
@@ -273,7 +273,7 @@ ipc run tests/programs/hello.ipc
 ```
 
 ```sh
-ipc run tests/programs/add.ipc
+ipcode run tests/programs/add.ipc
 # Output: 42
 ```
 
@@ -292,7 +292,7 @@ ipc run tests/programs/add.ipc
 ```
 
 ```sh
-ipc run tests/programs/loop.ipc
+ipcode run tests/programs/loop.ipc
 # Output: 1 2 3 4 5 (each on its own line)
 ```
 
@@ -310,7 +310,7 @@ ipc run tests/programs/loop.ipc
 ```
 
 ```sh
-ipc run tests/programs/func.ipc
+ipcode run tests/programs/func.ipc
 # Output: 49
 ```
 

@@ -1,4 +1,4 @@
-//! `ipc` — the IPcode interpreter binary.
+//! `ipcode` — the IPcode interpreter binary.
 //!
 //! Every line of an `.ipc` program is a fake IPv4 address `A.B.C.D`.
 
@@ -14,7 +14,7 @@ fn main() {
 
     let result = match cli.command {
         Command::Version => {
-            println!("ipc {}", env!("CARGO_PKG_VERSION"));
+            println!("ipcode {}", env!("CARGO_PKG_VERSION"));
             Ok(())
         }
         Command::Run { file, cycle_limit } => run_file(&file, cycle_limit),

@@ -19,21 +19,21 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Build release binary
-        run: cargo build --release
+      - name: Install cargo-deb
+        run: cargo install cargo-deb --locked
 
-      - name: Strip binary
-        run: strip target/release/ipc
+      - name: Build Debian installer
+        run: cargo deb
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ipc-linux-x86_64
-          path: target/release/ipc
+          name: ipcode-linux-x86_64-installer
+          path: target/debian/*.deb
 
       - name: Create GitHub Release (on tag)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: target/release/ipc
-          name: ipc-linux-x86_64
+          files: target/debian/*.deb
+          name: ipcode-linux-x86_64-installer
