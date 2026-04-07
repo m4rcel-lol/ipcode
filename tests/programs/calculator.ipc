@@ -1,0 +1,111 @@
+# calculator.ipc — interactive calculator
+# Supports: +, -, *, /, %
+# Type q as operator to quit.
+
+# loop start (line 1)
+1.0.4.97      # LOAD R4, 'a'
+6.1.4.0       # PRINTC R4
+1.0.4.61      # LOAD R4, '='
+6.1.4.0       # PRINTC R4
+1.0.4.32      # LOAD R4, ' '
+6.1.4.0       # PRINTC R4
+6.4.0.0       # INPUTI R0   (a)
+6.3.0.0       # PRINTLN
+
+1.0.4.111     # LOAD R4, 'o'
+6.1.4.0       # PRINTC R4
+1.0.4.112     # LOAD R4, 'p'
+6.1.4.0       # PRINTC R4
+1.0.4.61      # LOAD R4, '='
+6.1.4.0       # PRINTC R4
+1.0.4.32      # LOAD R4, ' '
+6.1.4.0       # PRINTC R4
+6.5.1.0       # INPUTC R1   (operator)
+6.3.0.0       # PRINTLN
+
+1.0.4.113     # LOAD R4, 'q'
+4.1.1.4       # EQ R1, R4
+5.1.0.85      # JT 85       (quit)
+
+1.0.4.98      # LOAD R4, 'b'
+6.1.4.0       # PRINTC R4
+1.0.4.61      # LOAD R4, '='
+6.1.4.0       # PRINTC R4
+1.0.4.32      # LOAD R4, ' '
+6.1.4.0       # PRINTC R4
+6.4.2.0       # INPUTI R2   (b)
+6.3.0.0       # PRINTLN
+
+1.0.4.43      # LOAD R4, '+'
+4.1.1.4       # EQ R1, R4
+5.1.0.49      # JT 49       (add)
+1.0.4.45      # LOAD R4, '-'
+4.1.1.4       # EQ R1, R4
+5.1.0.52      # JT 52       (sub)
+1.0.4.42      # LOAD R4, '*'
+4.1.1.4       # EQ R1, R4
+5.1.0.55      # JT 55       (mul)
+1.0.4.47      # LOAD R4, '/'
+4.1.1.4       # EQ R1, R4
+5.1.0.58      # JT 58       (div)
+1.0.4.37      # LOAD R4, '%'
+4.1.1.4       # EQ R1, R4
+5.1.0.64      # JT 64       (mod)
+
+1.0.4.63      # LOAD R4, '?'
+6.1.4.0       # PRINTC R4
+6.3.0.0       # PRINTLN
+5.0.0.1       # JMP 1
+
+# add (line 49)
+1.3.3.0       # MOV R3, R0
+2.0.3.2       # ADD R3, R2
+5.0.0.78      # JMP 78
+
+# sub (line 52)
+1.3.3.0       # MOV R3, R0
+2.1.3.2       # SUB R3, R2
+5.0.0.78      # JMP 78
+
+# mul (line 55)
+1.3.3.0       # MOV R3, R0
+2.2.3.2       # MUL R3, R2
+5.0.0.78      # JMP 78
+
+# div with zero check (line 58)
+1.0.4.0       # LOAD R4, 0
+4.1.2.4       # EQ R2, R4
+5.1.0.70      # JT 70       (division by zero error)
+1.3.3.0       # MOV R3, R0
+2.3.3.2       # DIV R3, R2
+5.0.0.78      # JMP 78
+
+# mod with zero check (line 64)
+1.0.4.0       # LOAD R4, 0
+4.1.2.4       # EQ R2, R4
+5.1.0.70      # JT 70       (modulo by zero error)
+1.3.3.0       # MOV R3, R0
+2.4.3.2       # MOD R3, R2
+5.0.0.78      # JMP 78
+
+# error: print "Err" (line 70)
+1.0.4.69      # LOAD R4, 'E'
+6.1.4.0       # PRINTC R4
+1.0.4.114     # LOAD R4, 'r'
+6.1.4.0       # PRINTC R4
+1.0.4.114     # LOAD R4, 'r'
+6.1.4.0       # PRINTC R4
+6.3.0.0       # PRINTLN
+5.0.0.1       # JMP 1
+
+# print result (line 78)
+1.0.4.61      # LOAD R4, '='
+6.1.4.0       # PRINTC R4
+1.0.4.32      # LOAD R4, ' '
+6.1.4.0       # PRINTC R4
+6.0.3.0       # PRINTI R3
+6.3.0.0       # PRINTLN
+5.0.0.1       # JMP 1
+
+# halt (line 85)
+0.1.0.0       # HALT
