@@ -54,6 +54,17 @@ Lines starting with `#` are comments and are ignored by the interpreter.
 
 Download the latest release for your platform from the [Releases page](../../releases).
 
+#### Linux packages
+
+- **Debian/Ubuntu** (`.deb`):
+  ```sh
+  sudo apt install ./ipcode-*.deb
+  ```
+- **Fedora/RHEL** (`.rpm`):
+  ```sh
+  sudo dnf install ./ipcode-*.rpm
+  ```
+
 ### Build from source
 
 You need Rust 1.70+ and Cargo:
