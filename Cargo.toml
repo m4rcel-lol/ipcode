@@ -34,3 +34,10 @@ assets = [
 upgrade-guid = "EE65A4F7-A4E4-4A20-8E18-A18D8A0E0FF6"
 path-guid = "7D8D4264-0C28-4BFA-9C66-1670AC2A4F34"
 license = "LICENSE"
+
+[package.metadata.generate-rpm]
+assets = [
+    { source = "target/release/ipcode", dest = "/usr/bin/ipcode", mode = "755" },
+    { source = "README.md", dest = "/usr/share/doc/ipcode/README.md", mode = "644", doc = true },
+    { source = "LICENSE", dest = "/usr/share/doc/ipcode/LICENSE", mode = "644", doc = true },
+]

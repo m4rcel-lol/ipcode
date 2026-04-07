@@ -19,21 +19,32 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install cargo-deb
-        run: cargo install cargo-deb --locked
+      - name: Install Linux packaging tools
+        run: |
+          cargo install cargo-deb --locked
+          cargo install cargo-generate-rpm --locked
 
-      - name: Build Debian installer
-        run: cargo deb
+      - name: Build release binary
+        run: cargo build --release
 
-      - name: Upload artifact
+      - name: Build Linux installers
+        run: |
+          cargo deb --no-build
+          cargo generate-rpm
+
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ipcode-linux-x86_64-installer
-          path: target/debian/*.deb
+          name: ipcode-linux-x86_64-installers
+          path: |
+            target/debian/*.deb
+            target/generate-rpm/*.rpm
 
       - name: Create GitHub Release (on tag)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: target/debian/*.deb
-          name: ipcode-linux-x86_64-installer
+          files: |
+            target/debian/*.deb
+            target/generate-rpm/*.rpm
+          name: ipcode-linux-x86_64-installers
