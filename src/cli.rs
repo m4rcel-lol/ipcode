@@ -1,11 +1,11 @@
-//! CLI argument parsing for the `ipc` binary.
+//! CLI argument parsing for the `ipcode` binary.
 
 use clap::{Parser, Subcommand};
 
 /// IPcode — a programming language where every line is a fake IPv4 address.
 #[derive(Parser, Debug)]
 #[command(
-    name = "ipc",
+    name = "ipcode",
     version = env!("CARGO_PKG_VERSION"),
     about = "IPcode interpreter and toolchain",
     long_about = None
@@ -15,7 +15,7 @@ pub struct Cli {
     pub command: Command,
 }
 
-/// Available `ipc` sub-commands.
+/// Available `ipcode` sub-commands.
 #[derive(Subcommand, Debug)]
 pub enum Command {
     /// Parse and execute an IPcode program.

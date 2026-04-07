@@ -6,7 +6,7 @@ description = "IPcode — a programming language where every line is a fake IPv4
 license = "MIT"
 
 [[bin]]
-name = "ipc"
+name = "ipcode"
 path = "src/main.rs"
 
 [dependencies]
@@ -14,3 +14,23 @@ clap = { version = "4.5", features = ["derive"] }
 colored = "2.1"
 
 [dev-dependencies]
+
+[package.metadata.deb]
+name = "ipcode"
+maintainer = "IPcode contributors"
+copyright = "2026, IPcode contributors"
+license-file = ["LICENSE", "0"]
+extended-description = "IPcode interpreter and toolchain"
+depends = "$auto"
+section = "utils"
+priority = "optional"
+assets = [
+    ["target/release/ipcode", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/ipcode/README.md", "644"],
+    ["LICENSE", "usr/share/doc/ipcode/LICENSE", "644"],
+]
+
+[package.metadata.wix]
+upgrade-guid = "EE65A4F7-A4E4-4A20-8E18-A18D8A0E0FF6"
+path-guid = "7D8D4264-0C28-4BFA-9C66-1670AC2A4F34"
+license = "LICENSE"
