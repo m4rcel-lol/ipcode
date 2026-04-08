@@ -39,7 +39,7 @@ jobs:
           ARCH_SRC_SHA256="$(sha256sum packaging/arch/ipcode-src.tar.gz | awk '{print $1}')"
           sed -i "s/^sha256sums=.*/sha256sums=('${ARCH_SRC_SHA256}')/" packaging/arch/PKGBUILD
           docker run --rm -v "$PWD:/work" -w /work archlinux:latest bash -lc '
-            pacman -Syu --noconfirm --needed base-devel rust cargo
+            pacman -Syu --noconfirm --needed base-devel rust
             HOST_UID="$(stat -c "%u" /work)"
             HOST_GID="$(stat -c "%g" /work)"
             BUILD_USER="$(getent passwd "$HOST_UID" | cut -d: -f1 || true)"
