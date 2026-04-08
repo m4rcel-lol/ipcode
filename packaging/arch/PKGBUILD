@@ -9,7 +9,7 @@ depends=('glibc')
 makedepends=('cargo')
 source=("${pkgname}-src.tar.gz")
 # Replaced in CI with the sha256 of the generated source archive before makepkg runs.
-sha256sums=('SKIP')
+sha256sums=('REPLACE_AT_CI_TIME')
 
 build() {
     cd "$srcdir"
