@@ -1,5 +1,4 @@
 /target
-Cargo.lock
 /packaging/arch/ipcode-src.tar.gz
 /packaging/arch/*.pkg.tar.zst
 /packaging/arch/*.pkg.tar.zst.sig
