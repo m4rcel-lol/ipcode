@@ -44,9 +44,15 @@ jobs:
             HOST_GID="$(stat -c "%g" /work)"
             BUILD_USER="$(getent passwd "$HOST_UID" | cut -d: -f1 || true)"
             if [ -z "$BUILD_USER" ]; then
-              groupadd -f -g "$HOST_GID" builder
-              if ! id -u builder >/dev/null 2>&1; then
-                useradd -m -u "$HOST_UID" -g "$HOST_GID" builder
+              BUILD_GROUP="$(getent group "$HOST_GID" | cut -d: -f1 || true)"
+              if [ -z "$BUILD_GROUP" ]; then
+                BUILD_GROUP="builder"
+                groupadd -g "$HOST_GID" "$BUILD_GROUP"
+              fi
+              if id -u builder >/dev/null 2>&1; then
+                usermod -u "$HOST_UID" -g "$BUILD_GROUP" builder
+              else
+                useradd -m -u "$HOST_UID" -g "$BUILD_GROUP" builder
               fi
               BUILD_USER="builder"
             fi
