@@ -64,6 +64,10 @@ Download the latest release for your platform from the [Releases page](../../rel
   ```sh
   sudo dnf install ./ipcode-*.rpm
   ```
+- **Arch Linux / Arch-based** (`.pkg.tar.zst`):
+  ```sh
+  sudo pacman -U ./ipcode-*.pkg.tar.zst
+  ```
 
 ### Build from source
 
