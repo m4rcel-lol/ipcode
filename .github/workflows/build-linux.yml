@@ -39,6 +39,7 @@ jobs:
           ARCH_SRC_SHA256="$(sha256sum packaging/arch/ipcode-src.tar.gz | awk '{print $1}')"
           sed -i "s/^sha256sums=.*/sha256sums=('${ARCH_SRC_SHA256}')/" packaging/arch/PKGBUILD
           # Pinned Arch image digest captured on 2026-04-08 for reproducible packaging.
+          # Update this digest periodically after validating package builds with a newer Arch image.
           docker run --rm -v "$PWD:/work" -w /work archlinux@sha256:b4df475619469581537637ceaace6075f4912ea1cd6db6b99d463e3a72969d04 bash -lc '
             pacman -Syu --noconfirm --needed base-devel rust
             HOST_UID="$(stat -c "%u" /work)"
