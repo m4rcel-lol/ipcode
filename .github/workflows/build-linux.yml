@@ -42,12 +42,16 @@ jobs:
             pacman -Syu --noconfirm --needed base-devel rust cargo
             HOST_UID="$(stat -c "%u" /work)"
             HOST_GID="$(stat -c "%g" /work)"
-            groupadd -f -g "$HOST_GID" builder
-            if ! id -u builder >/dev/null 2>&1; then
-              useradd -m -u "$HOST_UID" -g "$HOST_GID" builder
+            BUILD_USER="$(getent passwd "$HOST_UID" | cut -d: -f1 || true)"
+            if [ -z "$BUILD_USER" ]; then
+              groupadd -f -g "$HOST_GID" builder
+              if ! id -u builder >/dev/null 2>&1; then
+                useradd -m -u "$HOST_UID" -g "$HOST_GID" builder
+              fi
+              BUILD_USER="builder"
             fi
             cd /work/packaging/arch
-            su builder -c "makepkg --noconfirm --cleanbuild --syncdeps"
+            su "$BUILD_USER" -c "makepkg --noconfirm --cleanbuild --syncdeps"
           '
 
       - name: Upload artifacts
