@@ -43,7 +43,9 @@ jobs:
             HOST_UID="$(stat -c "%u" /work)"
             HOST_GID="$(stat -c "%g" /work)"
             groupadd -f -g "$HOST_GID" builder
-            useradd -m -u "$HOST_UID" -g "$HOST_GID" builder || true
+            if ! id -u builder >/dev/null 2>&1; then
+              useradd -m -u "$HOST_UID" -g "$HOST_GID" builder
+            fi
             cd /work/packaging/arch
             su builder -c "makepkg --noconfirm --cleanbuild --syncdeps"
           '
