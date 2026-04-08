@@ -1,0 +1,25 @@
+pkgname=ipcode
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="IPcode interpreter and toolchain"
+arch=('x86_64')
+url="https://github.com/m4rcel-lol/ipcode"
+license=('MIT')
+depends=('glibc')
+makedepends=('cargo')
+source=("${pkgname}-src.tar.gz")
+# Replaced in CI with the sha256 of the generated source archive before makepkg runs.
+# For manual local builds, replace this with: sha256sum ipcode-src.tar.gz | awk '{print $1}'.
+sha256sums=('REPLACE_AT_CI_TIME')
+
+build() {
+    cd "$srcdir"
+    cargo build --release --locked
+}
+
+package() {
+    cd "$srcdir"
+    install -Dm755 target/release/ipcode "$pkgdir/usr/bin/ipcode"
+    install -Dm644 README.md "$pkgdir/usr/share/doc/ipcode/README.md"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/ipcode/LICENSE"
+}

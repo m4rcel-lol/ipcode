@@ -32,6 +32,37 @@ jobs:
           cargo deb --no-build
           cargo generate-rpm
 
+      - name: Build Arch Linux installer
+        run: |
+          git archive --format=tar.gz --output=/tmp/ipcode-src.tar.gz HEAD
+          cp /tmp/ipcode-src.tar.gz packaging/arch/ipcode-src.tar.gz
+          ARCH_SRC_SHA256="$(sha256sum packaging/arch/ipcode-src.tar.gz | awk '{print $1}')"
+          sed -i "s/^sha256sums=.*/sha256sums=('${ARCH_SRC_SHA256}')/" packaging/arch/PKGBUILD
+          # Pinned Arch image digest captured on 2026-04-08 for reproducible packaging.
+          # Update this digest periodically after validating package builds with a newer Arch image.
+          docker run --rm -v "$PWD:/work" -w /work archlinux@sha256:b4df475619469581537637ceaace6075f4912ea1cd6db6b99d463e3a72969d04 bash -lc '
+            pacman -Syu --noconfirm --needed base-devel rust
+            HOST_UID="$(stat -c "%u" /work)"
+            HOST_GID="$(stat -c "%g" /work)"
+            if getent passwd "$HOST_UID" >/dev/null 2>&1; then
+              BUILD_USER="$(getent passwd "$HOST_UID" | cut -d: -f1)"
+            else
+              BUILD_GROUP="$(getent group "$HOST_GID" | cut -d: -f1 || true)"
+              if [ -z "$BUILD_GROUP" ]; then
+                BUILD_GROUP="builder"
+                groupadd -g "$HOST_GID" "$BUILD_GROUP"
+              fi
+              if id -u builder >/dev/null 2>&1; then
+                usermod -u "$HOST_UID" -g "$BUILD_GROUP" builder
+              else
+                useradd -m -u "$HOST_UID" -g "$BUILD_GROUP" builder
+              fi
+              BUILD_USER="builder"
+            fi
+            cd /work/packaging/arch
+            su "$BUILD_USER" -c "makepkg --noconfirm --cleanbuild --syncdeps"
+          '
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -39,6 +70,7 @@ jobs:
           path: |
             target/debian/*.deb
             target/generate-rpm/*.rpm
+            packaging/arch/*.pkg.tar.zst
 
       - name: Create GitHub Release (on tag)
         if: startsWith(github.ref, 'refs/tags/v')
@@ -47,4 +79,5 @@ jobs:
           files: |
             target/debian/*.deb
             target/generate-rpm/*.rpm
+            packaging/arch/*.pkg.tar.zst
           name: ipcode-linux-x86_64-installers
