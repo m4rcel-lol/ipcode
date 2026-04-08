@@ -238,6 +238,22 @@ fn test_call_ret() {
     assert_eq!(regs[0], 11);
 }
 
+#[test]
+fn test_frame_unframe_preserve_existing_stack_values() {
+    let src = "1.0.0.7\n1.4.0.0\n7.3.2.0\n7.4.2.0\n1.5.1.0\n0.1.0.0\n";
+    let (regs, _) = run_and_regs(src);
+    assert_eq!(regs[1], 7);
+}
+
+#[test]
+fn test_unframe_underflow() {
+    let tokens = lex("7.4.1.0\n", "t.ipc").unwrap();
+    let program = parse(&tokens, "t.ipc").unwrap();
+    let mut vm = Vm::new("t.ipc");
+    let err = vm.run_program(&program).unwrap_err();
+    assert_eq!(err.kind, ErrorKind::StackUnderflow);
+}
+
 // ── Cycle limit ──────────────────────────────────────────────────────────────
 
 #[test]
