@@ -34,12 +34,18 @@ jobs:
 
       - name: Build Arch Linux installer
         run: |
-          tar --exclude='./.git' --exclude='./target' --exclude='./packaging/arch/ipcode-src.tar.gz' -czf /tmp/ipcode-src.tar.gz .
+          git archive --format=tar.gz --output=/tmp/ipcode-src.tar.gz HEAD
           cp /tmp/ipcode-src.tar.gz packaging/arch/ipcode-src.tar.gz
+          ARCH_SRC_SHA256="$(sha256sum packaging/arch/ipcode-src.tar.gz | awk '{print $1}')"
+          sed -i "s/^sha256sums=.*/sha256sums=('${ARCH_SRC_SHA256}')/" packaging/arch/PKGBUILD
           docker run --rm -v "$PWD:/work" -w /work archlinux:latest bash -lc '
             pacman -Syu --noconfirm --needed base-devel rust cargo
+            HOST_UID="$(stat -c "%u" /work)"
+            HOST_GID="$(stat -c "%g" /work)"
+            groupadd -f -g "$HOST_GID" builder
+            useradd -m -u "$HOST_UID" -g "$HOST_GID" builder || true
             cd /work/packaging/arch
-            makepkg --noconfirm --cleanbuild --syncdeps --asroot
+            su builder -c "makepkg --noconfirm --cleanbuild --syncdeps"
           '
 
       - name: Upload artifacts
