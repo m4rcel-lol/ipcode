@@ -382,11 +382,15 @@ impl Vm {
                 self.call_stack.push(self.pc + 1, &self.file, src_line)?;
                 next_pc = self.resolve_jump(target, src_line, program_len)?;
             }
-            Instruction::Frame(_v) => {
-                // Frame allocation is a no-op in this simplified VM implementation.
+            Instruction::Frame(v) => {
+                for _ in 0..*v {
+                    self.data_stack.push(0, &self.file, src_line)?;
+                }
             }
-            Instruction::Unframe(_v) => {
-                // Unframe is a no-op in this simplified VM implementation.
+            Instruction::Unframe(v) => {
+                for _ in 0..*v {
+                    let _ = self.data_stack.pop(&self.file, src_line)?;
+                }
             }
 
             // ── Category 8: Memory / Heap ──────────────────────────────────
